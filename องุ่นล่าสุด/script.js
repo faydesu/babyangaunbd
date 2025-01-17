@@ -9,22 +9,17 @@ if (localStorage.getItem('popScore')) {
     scoreDisplay.textContent = score;
 }
 
-// เมื่อคลิกเพิ่มคะแนนและเปลี่ยนภาพ
-clickArea.addEventListener('click', () => {
+// ✅ เมื่อคลิก เพิ่มคะแนน + เปลี่ยนภาพขณะคลิกเท่านั้น
+clickArea.addEventListener('mousedown', () => {
     score++;
     scoreDisplay.textContent = score;
-    localStorage.setItem('popScore', score); // ✅ บันทึกคะแนนลง Local Storage
-    catImage.src = 'catbaby.png';
+    localStorage.setItem('popScore', score); 
+    catImage.src = 'catbaby.png'; // เปลี่ยนเป็นรูปคลิกทันที
 });
 
-// ✅ เมื่อกดค้าง เปลี่ยนภาพแต่ไม่เพิ่มคะแนน
-clickArea.addEventListener('mousedown', () => {
-    catImage.src = 'catbaby.png';
-});
-
-// ✅ เมื่อปล่อยเปลี่ยนกลับเป็นภาพปกติ
+// ✅ กลับเป็นภาพปกติเมื่อปล่อยคลิก
 clickArea.addEventListener('mouseup', () => {
-    catImage.src = 'catcat.png';
+    catImage.src = 'catcat.png'; // กลับเป็นภาพปกติ
 });
 
 // ✅ กรณีลากออกนอกหน้าจอแล้วปล่อย
