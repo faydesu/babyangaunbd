@@ -9,20 +9,29 @@ if (localStorage.getItem('popScore')) {
     scoreDisplay.textContent = score;
 }
 
-// ✅ เมื่อคลิก เพิ่มคะแนน + เปลี่ยนภาพขณะคลิกเท่านั้น
+// ✅ เปลี่ยนภาพและเพิ่มคะแนนเมื่อคลิก
 clickArea.addEventListener('mousedown', () => {
     score++;
     scoreDisplay.textContent = score;
-    localStorage.setItem('popScore', score); 
-    catImage.src = 'catbaby.png'; // เปลี่ยนเป็นรูปคลิกทันที
+    localStorage.setItem('popScore', score);
+    catImage.src = 'catbaby.png';  // เปลี่ยนภาพเป็น catbaby.png
 });
 
 // ✅ กลับเป็นภาพปกติเมื่อปล่อยคลิก
 clickArea.addEventListener('mouseup', () => {
-    catImage.src = 'catcat.png'; // กลับเป็นภาพปกติ
+    catImage.src = 'catcat.png';  // กลับเป็นภาพ catcat.png
 });
 
-// ✅ กรณีลากออกนอกหน้าจอแล้วปล่อย
-clickArea.addEventListener('mouseleave', () => {
-    catImage.src = 'catcat.png';
+// ✅ รองรับการแตะบนหน้าจอมือถือ
+clickArea.addEventListener('touchstart', (event) => {
+    event.preventDefault();  // ป้องกันการแตะสองครั้ง
+    score++;
+    scoreDisplay.textContent = score;
+    localStorage.setItem('popScore', score);
+    catImage.src = 'catbaby.png'; 
+});
+
+// ✅ กลับเป็นภาพปกติเมื่อปล่อยนิ้วบนมือถือ
+clickArea.addEventListener('touchend', () => {
+    catImage.src = 'catcat.png'; 
 });
