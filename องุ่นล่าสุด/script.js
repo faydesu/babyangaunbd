@@ -9,29 +9,30 @@ if (localStorage.getItem('popScore')) {
     scoreDisplay.textContent = score;
 }
 
-// ✅ เปลี่ยนภาพและเพิ่มคะแนนเมื่อคลิก
-clickArea.addEventListener('mousedown', () => {
+// ✅ ฟังก์ชันเปลี่ยนภาพเมื่อกดและปล่อย
+function changeImageToClicked() {
     score++;
     scoreDisplay.textContent = score;
     localStorage.setItem('popScore', score);
-    catImage.src = 'catbaby.png';  // เปลี่ยนภาพเป็น catbaby.png
-});
+    catImage.src = 'catbaby.png';  // เปลี่ยนเป็นภาพตอนคลิก
+}
 
-// ✅ กลับเป็นภาพปกติเมื่อปล่อยคลิก
-clickArea.addEventListener('mouseup', () => {
-    catImage.src = 'catcat.png';  // กลับเป็นภาพ catcat.png
-});
+function resetImage() {
+    catImage.src = 'catcat.png';  // กลับเป็นภาพปกติ
+}
 
-// ✅ รองรับการแตะบนหน้าจอมือถือ
+// ✅ รองรับการคลิกเมาส์
+clickArea.addEventListener('mousedown', changeImageToClicked);
+clickArea.addEventListener('mouseup', resetImage);
+clickArea.addEventListener('mouseleave', resetImage);
+
+// ✅ รองรับการแตะบนมือถือ
 clickArea.addEventListener('touchstart', (event) => {
-    event.preventDefault();  // ป้องกันการแตะสองครั้ง
-    score++;
-    scoreDisplay.textContent = score;
-    localStorage.setItem('popScore', score);
-    catImage.src = 'catbaby.png'; 
+    event.preventDefault(); // ป้องกันการแตะสองครั้ง
+    changeImageToClicked();
 });
 
-// ✅ กลับเป็นภาพปกติเมื่อปล่อยนิ้วบนมือถือ
-clickArea.addEventListener('touchend', () => {
-    catImage.src = 'catcat.png'; 
+clickArea.addEventListener('touchend', (event) => {
+    event.preventDefault(); 
+    resetImage();
 });
